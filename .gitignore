@@ -1,5 +1,8 @@
-# Ignore Terraform lock file
-.terraform.lock.hcl
+# Terraform state files
+*.tfstate
+*.tfstate.*
+.terraform/
 
-# Ignore Terraform provider plugins
-terraform-provider-aws_v*
+# Lock file
+.terraform.tfstate.lock.info
+.terraform.lock.hcl
