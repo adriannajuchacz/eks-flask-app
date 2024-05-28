@@ -23,7 +23,15 @@ resource "aws_eks_node_group" "eks_node_group" {
     max_size     = 2
     min_size     = 1
   }
+  disk_size = 20
+
+  depends_on = [
+    aws_iam_role_policy_attachment.eks-node-AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.eks-node-AmazonEC2ContainerRegistryReadOnly,
+    aws_iam_role_policy_attachment.eks-node-AmazonEKSCNIPolicy
+  ]
 }
+
 
 resource "aws_iam_role" "eks_role" {
   name = "eks-role"
@@ -79,3 +87,7 @@ resource "aws_iam_role_policy_attachment" "eks-node-AmazonEC2ContainerRegistryRe
   role       = aws_iam_role.eks_node.name
 }
 
+resource "aws_iam_role_policy_attachment" "eks-node-AmazonEKSCNIPolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  role       = aws_iam_role.eks_node.name
+}
